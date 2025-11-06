@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <cstdint>
 namespace PSI
 {
     constexpr size_t Label_bit_size = 256;

@@ -258,11 +258,13 @@ namespace PSI
 
                 chl.close();
             }
+            std::cout <<"off com size"<<Coummunication_Cost << "Bytes" << std::endl;
+
             for(auto &chl : chlsA){
                 Coummunication_Cost += chl.getTotalDataSent()+chl.getTotalDataRecv();
                 chl.close();
             }
-            std::cout <<"off com size"<<Coummunication_Cost / 1024.0/1024.0  << std::endl;
+            std::cout <<"off com size"<<Coummunication_Cost << "Bytes" << std::endl;
             clocks.setDurationEnd("online");
 
             clocks.printDurationRecord();
