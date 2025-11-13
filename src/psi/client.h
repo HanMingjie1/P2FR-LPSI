@@ -67,7 +67,8 @@ namespace PSI{
                 void DHBasedPSI_start(std::string ServerAddress,std::string AidServerAddress,const std::vector<Item>& input);
                 
                 // SIMD Opt for all procedure of DH based LPSI
-                void DHBased_SIMDDPF_PSI_start(std::string ServerAddress,std::string AidServerAddress,const std::vector<Item>& input);
+                // Returns total communication volume in bytes
+                uint64_t DHBased_SIMDDPF_PSI_start(std::string ServerAddress,std::string AidServerAddress,const std::vector<Item>& input);
                
                 // All procedure of GC based LPSI
                 void GCBasedPSI_start(std::string ServerAddress,std::string AidServerAddress,const std::vector<Item>& input);

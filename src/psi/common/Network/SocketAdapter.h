@@ -97,7 +97,7 @@ namespace PSI
                 for (uint64_t i = 0; i < uint64_t( buffers.size()); ++i) {
                     try {
                         // Use boost conversions to get normal pointer size
-                        auto data = boost::asio::buffer_cast<uint8_t*>(buffers[i]);
+                        auto data = buffers[i].data();
                         auto size = boost::asio::buffer_size(buffers[i]);
 
                         // NOTE: I am assuming that this is blocking. 
@@ -130,7 +130,7 @@ namespace PSI
                 for (uint64_t i = 0; i < uint64_t(buffers.size()); ++i) {
                     try {
                         // Use boost conversions to get normal pointer size
-                        auto data = boost::asio::buffer_cast<uint8_t*>(buffers[i]);
+                        auto data = buffers[i].data();
                         auto size = boost::asio::buffer_size(buffers[i]);
 
                         // Note that I am assuming that this is blocking. 
@@ -234,7 +234,7 @@ namespace PSI
 
                 for (auto buffer : buffers)
                 {
-                    auto b = std::span<uint8_t>(boost::asio::buffer_cast<uint8_t*>(buffer), boost::asio::buffer_size(buffer));
+                    auto b = std::span<uint8_t>(static_cast<uint8_t*>(buffer.data()), boost::asio::buffer_size(buffer));
                     op.mBuffers.push_back(b);
                 }
                 op.mType = Operation::Recv;
@@ -260,7 +260,7 @@ namespace PSI
                 Operation op;
                 for (auto buffer : buffers)
                 {
-                    auto b = std::span<uint8_t>(boost::asio::buffer_cast<uint8_t*>(buffer), boost::asio::buffer_size(buffer));
+                    auto b = std::span<uint8_t>(static_cast<uint8_t*>(buffer.data()), boost::asio::buffer_size(buffer));
                     op.mBuffers.push_back(b);
                 }
                 op.mType = Operation::Send;

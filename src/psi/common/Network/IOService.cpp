@@ -10,13 +10,14 @@
 #include <algorithm>
 #include <sstream>
 #include "util.h"
+#include <sys/socket.h> // 为 SOMAXCONN 提供定义
 
 namespace PSI
 {
 
     void post(IOService* ios, std::function<void()>&& fn)
     {
-        ios->mIoService.post(std::move(fn));
+        boost::asio::post(ios->mIoService, std::move(fn));
     }
 
 
@@ -30,7 +31,7 @@ namespace PSI
 #endif
 
     Work::Work(IOService& ios, std::string reason)
-        : mWork(new boost::asio::io_service::work(ios.mIoService))
+        : mWork(boost::asio::make_work_guard(ios.mIoService))
         , mReason(reason)
         , mIos(ios)
     {
@@ -46,14 +47,14 @@ namespace PSI
 
     void Work::reset()
     {
-        if(mWork)
+        if(mWork.owns_work())
         {
 #ifdef ENABLE_NET_LOG
             std::lock_guard<std::mutex> lock(mIos.mWorkerMtx);
             auto iter = mIos.mWorkerLog.find(mWork.get());
             mIos.mWorkerLog.erase(iter);
 #endif
-            mWork.reset(nullptr);
+            mWork.reset();
         }
     }
 
@@ -90,7 +91,7 @@ namespace PSI
             return;
         }
 
-        mAddress = *addrIter;
+        mAddress = *addrIter.begin();
 
         mHandle.open(mAddress.protocol());
         mHandle.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
@@ -117,7 +118,7 @@ namespace PSI
 
         //std::promise<void> mStoppedListeningPromise, mSocketChannelPairsRemovedProm;
         //std::future<void> mStoppedListeningFuture, mSocketChannelPairsRemovedFuture;
-        mHandle.listen(boost::asio::socket_base::max_connections);
+        mHandle.listen(SOMAXCONN);
     }
 
     void Acceptor::start()

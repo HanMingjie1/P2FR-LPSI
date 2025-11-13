@@ -1,10 +1,11 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <cstdint>
 namespace PSI
 {
-    constexpr size_t Label_bit_size = 256;
-    constexpr size_t Label_byte_size = 32;
+    constexpr size_t Label_bit_size = 12;
+    constexpr size_t Label_byte_size = (Label_bit_size+7)/8;
 
     constexpr size_t Leading_zero_length =  5;
     constexpr size_t Item_byte_size = 16;
@@ -18,8 +19,8 @@ namespace PSI
     constexpr size_t OPRFValueBytes = OPRFKeyBytesNumber + Leading_zero_length + Label_byte_size;
 
     namespace DPF{
-        constexpr size_t DPF_INPUT_BIT_SIZE = 16;
-        constexpr size_t DPF_INPUT_BYTE_SIZE = 2;
+        constexpr size_t DPF_INPUT_BIT_SIZE = 20;
+        constexpr size_t DPF_INPUT_BYTE_SIZE = 3;
         constexpr size_t DPF_OUTPUT_COUNT = 1 << DPF_INPUT_BIT_SIZE;
         constexpr size_t DPF_OUTPUT_U64COUNT = DPF_OUTPUT_COUNT/64;
         
@@ -150,6 +151,12 @@ namespace PSI
             constexpr size_t max_set_size = 5;
         }
 
+        namespace cuckooparam220vs1048576{
+            constexpr size_t table_size  = 2097152; // 2^21
+            constexpr size_t block_num = 4096;      // 块数
+            constexpr size_t block_size = table_size/block_num; // 每块容量
+            constexpr size_t max_set_size = 1024;   // 每块最大集合数
+        }
 
         using namespace cuckooparam220vs4096;
 

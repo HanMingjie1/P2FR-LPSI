@@ -399,7 +399,7 @@ namespace PSI
         iosA.stop();
     }
 
-    void PSIClient::DHBased_SIMDDPF_PSI_start(std::string ServerAddress,std::string AidServerAddress,const std::vector<Item>& input){
+    uint64_t PSIClient::DHBased_SIMDDPF_PSI_start(std::string ServerAddress,std::string AidServerAddress,const std::vector<Item>& input){
         StopWatch clocks("PSIClient");
         clocks.setpoint("start");
         IOService iosS;
@@ -470,6 +470,7 @@ namespace PSI
         sessionA.stop();
         iosS.stop();
         iosA.stop();
+        return cnt; // 返回通信量（字节）
     }
 
     void PSIClient::GCBasedPSI_start(std::string ServerAddress,std::string AidServerAddress,const std::vector<Item>& input){

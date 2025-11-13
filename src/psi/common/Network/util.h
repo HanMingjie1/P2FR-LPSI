@@ -21,7 +21,8 @@ namespace PSI
     class Work
     {
     public:
-        std::unique_ptr<boost::asio::io_service::work> mWork;
+        // 新版Boost推荐用法
+        boost::asio::executor_work_guard<boost::asio::io_context::executor_type> mWork;
         std::string mReason;
         IOService& mIos;
         Work(IOService& ios, std::string reason);

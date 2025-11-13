@@ -16,7 +16,7 @@ endif()
 ####################
 # Dependencies     #
 ####################
-message(${VCPKG_TARGET_TRIPLET})
+message(STATUS "VCPKG_TARGET_TRIPLET: ${VCPKG_TARGET_TRIPLET}")
 
 find_package(Kuku REQUIRED)
 find_package(OpenSSL REQUIRED)
@@ -34,7 +34,7 @@ set(CMAKE_CXX_STANDARD 20)
         CACHE PATH "Path to internally built Boost installation root"
         FORCE
     )
-    message(${BOOST_ROOT})
+    message(STATUS "BOOST_ROOT: ${BOOST_ROOT}")
     set(
         BOOST_INCLUDEDIR ${BOOST_ROOT}/include
         CACHE PATH "Path to internally built Boost include directories"

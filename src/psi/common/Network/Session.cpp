@@ -75,9 +75,10 @@ namespace PSI {
 #ifdef ENABLE_WOLFSSL
 			mBase->mTLSSessionID = prng.get();
 #endif
-            boost::asio::ip::tcp::resolver resolver(ioService.mIoService);
-            boost::asio::ip::tcp::resolver::query query(mBase->mIP, boost::lexical_cast<std::string>(port));
-            mBase->mRemoteAddr = *resolver.resolve(query);
+            // 传递底层 io_context 给 resolver
+            boost::asio::ip::tcp::resolver resolver(mBase->mIOService->mIoService);
+            auto results = resolver.resolve(mBase->mIP, boost::lexical_cast<std::string>(port));
+            mBase->mRemoteAddr = *results.begin();
         }
     }
 
