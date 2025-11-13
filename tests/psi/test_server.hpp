@@ -170,7 +170,7 @@ void TestDHSIMD(){
     std::vector<PSI::Item> ReceiverSet;
 
     size_t Rsize = 4096; 
-    size_t Ssize = 16777216;
+    size_t Ssize = 1048576;
     std::vector<PSI::Label> label(Ssize);
         for(size_t idx = 0;idx < Ssize; idx++){
             uint64_t temp[2];

@@ -86,7 +86,7 @@ namespace PSI
             // Cuckoo Hash Table
             std::vector<LabelMask> hash_table;
             // Communication Cost by byte
-            size_t Coummunication_Cost;
+            size_t Coummunication_Cost = 0;
             size_t server_set_size_;
             DHOPRF::OPRFSender DHOPRFSender;
             GCOPRF::OPRFSender GCOPRFSender;
